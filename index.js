@@ -1,9 +1,18 @@
 const express = require("express");
-const { getSecretData } = require("./data");
+const { getSecretData, checkCredentials } = require("./data");
 
 const app = express();
 
 app.use(express.json());
+
+app.post("/api/login", (req, res) => {
+  const result = checkCredentials(req.body.email, req.body.password);
+  if (result) {
+    res.send({ token: "I have to send the token here" });
+  } else {
+    res.status(401).send();
+  }
+});
 
 app.get("/api/data", (req, res) => {
   if (

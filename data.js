@@ -5,6 +5,11 @@ function getSecretData() {
   };
 }
 
+function checkCredentials(email, password) {
+  return email === "user@email.com" && password === "password";
+}
+
 module.exports = {
   getSecretData,
+  checkCredentials,
 };
