@@ -1,11 +1,12 @@
 const express = require("express");
+const { getSecretData } = require("./data");
 
 const app = express();
 
 app.use(express.json());
 
-app.get("/about-us", (req, res) => {
-  res.send(`We are from Amrita`);
+app.get("/api/data", (_, res) => {
+  res.send(getSecretData());
 });
 
 app.post("/", (req, res) => {
