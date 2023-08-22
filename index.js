@@ -1,11 +1,15 @@
-const http = require("http");
+const express = require("express");
 
-const server = http.createServer((req, res) => {
-  const name = req.url.substring(req.url.lastIndexOf("/") + 1);
-  res.writeHead(200, { "Content-Type": "text/plain" });
-  res.end(`Hello ${name}`);
+const app = express();
+
+app.get("/about-us", (req, res) => {
+  res.send(`We are from Amrita`);
 });
 
-server.listen(3000, () => {
+app.get("/:name", (req, res) => {
+  res.send(`Hello ${req.params.name}`);
+});
+
+app.listen(3000, () => {
   console.log("Listening on port 3000");
 });
