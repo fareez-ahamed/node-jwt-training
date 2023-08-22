@@ -1,8 +1,9 @@
-const readline = require("readline");
+const fs = require("fs");
 
-const rl = readline.createInterface(process.stdin, process.stdout);
-
-rl.question("What is your name?", (answer) => {
-  console.log(`Hello ${answer}!`);
-  rl.close();
+fs.readFile("lorem.txt", (err, data) => {
+  if (err) {
+    console.log("Got error", err);
+    return;
+  }
+  console.log(data.toString());
 });
