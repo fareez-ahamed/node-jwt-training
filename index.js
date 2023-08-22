@@ -5,7 +5,14 @@ const app = express();
 
 app.use(express.json());
 
-app.get("/api/data", (_, res) => {
+app.get("/api/data", (req, res) => {
+  if (
+    req.headers.authorization === undefined ||
+    req.headers.authorization.startsWith("Bearer") === false
+  ) {
+    res.status(401).send();
+    return;
+  }
   res.send(getSecretData());
 });
 
