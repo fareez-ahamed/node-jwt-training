@@ -1,6 +1,6 @@
 const express = require("express");
 const { getSecretData, checkCredentials } = require("./data");
-const { sign } = require("jsonwebtoken");
+const { sign, verify } = require("jsonwebtoken");
 
 const app = express();
 const secretKey = "213847ksdfkjshdfjkhskjdhf293847skdf";
@@ -10,6 +10,10 @@ app.use(express.json());
 function generateToken(payload) {
   return sign(payload, secretKey);
 }
+
+function verifyToken(token) {
+  const result = verify(token, secretKey);
+  return result;
 }
 
 app.post("/api/login", (req, res) => {
@@ -29,7 +33,15 @@ app.get("/api/data", (req, res) => {
     res.status(401).send();
     return;
   }
-  res.send(getSecretData());
+  const token = req.headers.authorization.substring(7);
+  let payload = null;
+  try {
+    payload = verifyToken(token);
+  } catch (e) {
+    res.status(401).send();
+    return;
+  }
+  res.send(getSecretData(payload.id));
 });
 
 app.post("/", (req, res) => {

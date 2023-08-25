@@ -1,7 +1,8 @@
-function getSecretData() {
+function getSecretData(userId) {
   return {
     x: 23,
     y: 46,
+    userId,
   };
 }
 
