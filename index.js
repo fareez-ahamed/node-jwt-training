@@ -1,14 +1,21 @@
 const express = require("express");
 const { getSecretData, checkCredentials } = require("./data");
+const { sign } = require("jsonwebtoken");
 
 const app = express();
+const secretKey = "213847ksdfkjshdfjkhskjdhf293847skdf";
 
 app.use(express.json());
+
+function generateToken(payload) {
+  return sign(payload, secretKey);
+}
+}
 
 app.post("/api/login", (req, res) => {
   const result = checkCredentials(req.body.email, req.body.password);
   if (result) {
-    res.send({ token: "I have to send the token here" });
+    res.send({ token: generateToken(result) });
   } else {
     res.status(401).send();
   }

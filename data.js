@@ -6,7 +6,14 @@ function getSecretData() {
 }
 
 function checkCredentials(email, password) {
-  return email === "user@email.com" && password === "password";
+  if (email === "user@email.com" && password === "password") {
+    return {
+      email,
+      id: "234787458", // fetched from database
+      role: "admin", // fetched from database
+    };
+  }
+  return null;
 }
 
 module.exports = {
